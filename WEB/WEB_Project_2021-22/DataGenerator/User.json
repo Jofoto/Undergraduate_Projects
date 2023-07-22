@@ -1,0 +1,113 @@
+[
+    {
+        "username": "aggelos",
+        "password": "Agg2elos#2",
+        "email": "aggelos@gmail.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "georgia",
+        "password": "Georgia#4",
+        "email": "georgia@gmail.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "kati",
+        "password": "Katikati#2",
+        "email": "kati@gmail.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Samuel Mitchelle",
+        "password": "Gary#3#Gary",
+        "email": "samuel.mitchelle@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Anita Dunn",
+        "password": "Anita$1369",
+        "email": "anita.dunn@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "George Scott",
+        "password": "NathanScott#1",
+        "email": "GeorgeScott@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Henry Hoffman",
+        "password": "OxygenOxy%4",
+        "email": "henry.hoffman@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Minnie Steward",
+        "password": "BigDogBig#3",
+        "email": "minnie.steward@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Nicholas Hale",
+        "password": "NickHal25%80",
+        "email": "nicholas.hale@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Ronald Mitchell",
+        "password": "Bronze#2#Bro",
+        "email": "ronald.mitchell@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Leta Young",
+        "password": "Kristi$8Kri",
+        "email": "leta.young@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Glenda Harrison",
+        "password": "Spooky#456",
+        "email": "glenda.harrison@example.com",
+        "admin": false,
+        "__v": 0
+    },
+ 
+    {
+        "username": "Brooklyn May",
+        "password": "puFFy&5432",
+        "email": "brooklyn.may@example.com",
+        "admin": false,
+        "__v": 0
+    },
+
+    {
+        "username": "Louise Carlson",
+        "password": "wiTch$859",
+        "email": "louise.carlson@example.com",
+        "admin": false,
+        "__v": 0
+    }
+]
