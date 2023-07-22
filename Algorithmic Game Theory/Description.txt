@@ -1,0 +1,1 @@
+Research in the field of Algorithmic Game Theory in the subjects of the Vertex Cover Game and Weighted Voting Games.
