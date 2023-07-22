@@ -1,0 +1,96 @@
+PROGRAM input
+/*---------------------------FLEX AND BISON PROJECT -----------------------------
+--------------------------LEXICAL AND SYNTAX ANALYSIS ---------------------
+------------------------------HERE'S OUR PROGRAM------------------------------------
+---------------------------MULTIPLE LINE COMMENT TEST---------------------------------------------*/
+%function/if test
+FUNCTION smaller(INTEGER x1, INTEGER x2)
+    IF (x1<x2) THEN
+        PRINT(""[,x1]);      
+    ELSEIF (x1<x2)
+        PRINT(""[,x2]);      
+    ELSE 
+        PRINT("The two numbers are equal");  
+    ENDIF
+    RETURN x1;
+END_FUNCTION 
+
+%function/while test 
+FUNCTION doStuff(INTEGER var1, INTEGER var2)
+    WHILE(var1<10 AND var2<20)
+        IF(var1==var2) THEN
+            BREAK;
+        ENDIF        
+        var1 = 45;
+        var2 >= 56;
+    ENDWHILE
+
+    RETURN var2;
+END_FUNCTION
+ 
+FUNCTION swissFiss(INTEGER day)
+    SWITCH(<day>)
+    CASE(<11>)
+        PRINT("Monday");
+        BREAK;
+    CASE(<12>)
+        PRINT("Tuesday");
+        BREAK;
+    CASE(<13>)
+        PRINT("Wednesday");
+        BREAK;
+    CASE(<14>)
+        PRINT("Thursday");
+        BREAK;
+    CASE(<15>)
+        PRINT("Friday");
+        BREAK;
+    CASE(<16>)
+        PRINT("Saturday");
+
+        BREAK;    
+    CASE(<17>)
+        PRINT("Sunday");
+        BREAK;
+    ENDSWITCH
+    RETURN day;    
+END_FUNCTION
+
+STARTMAIN
+    VARS
+        CHAR char1, char2;
+        INTEGER varr, foo, foo1, foo2, foo3, foo4, foo5, pinakas[100], day;
+    
+    % calculations
+    foo = 10.8;
+    foo1 = 50;
+    %foo2 = foo + foo1
+    %foo3 = foo * foo2;
+    foo4 = doStuff(foo3, foo1);
+
+    plus = 50 + 60; 
+    mul = 10*20;
+    div = 300/50;
+    sub = 40-60;
+
+    pinakas[10] = 10;
+    pinakas[20] = 20;
+    pinakas[30] = 30;
+    pinakas[40] = 40;
+    pinakas[50] = 50;
+    pinakas[60] = 60;
+    pinakas[70] = 70;
+    pinakas[80] = 80;
+    pinakas[90] = 90;
+    pinakas[100] = 100;
+
+    FOR varr:=10 TO 100 STEP 10 
+        PRINT(""[,pinakas[varr]]);
+    ENDFOR
+
+    %day = pinakas[50];
+    
+    %function_call
+    swissFiss(day);
+    %end of program.:)
+ENDMAIN

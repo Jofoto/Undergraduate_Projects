@@ -1,0 +1,149 @@
+<PROGRAM> ::= <PROGRAM><word>NEWLINE | <PROGRAM><line> | <PROGRAM><main_func>
+
+<char> ::= [a-z]|[A-Z]       
+<nonzero> ::= 1|2|3|4|5|6|7|8|9
+<digit> ::= 0|<nonzero>
+<digits> ::= <digit>|<digit><digits>
+<integers> ::= <digit>|<nonzero><digits> 
+
+<empty>   ::= 
+<word> ::= CHAR|<word>CHAR
+
+<line> ::= <if_stmt> | <elseif_stmt> | <else_stmt> |<for_statement> | <function> NEWLINE 
+            | <function_call> 
+            | <comments> NEWLINE 
+            | <print> NEWLINE 
+            | <break>
+            | <variable>
+            | <switch> 
+            | <while>  
+            | <import_statement> NEWLINE 
+            | <dictionaries> NEWLINE 
+	          | <calc_assigmnet> NEWLINE
+            | <main_func>
+
+<break>::= BREAK QM NEWLINE 
+<data_type> ::= CHAR | INTEGER | IDENTIFIER | FLOAT | STRING 
+
+<variable>::= VARS  <data_type> <inspector> 
+        | VARS  <data_type> IDENTIFIER COMMA IDENTIFIER 
+        | VARS  <variable_dictionary>
+        | <variable> <variable_dictionary>
+        | <variable> QM
+        | <variable>  <variable_dictionary> QM
+
+<variable_dictionary>::= <data_type> <inspector>
+                     | <data_type> IDENTIFIER COMMA IDENTIFIER
+                     | COMMA <array>
+                     | <array>
+                     | COMMA IDENTIFIER
+                     | IDENTIFIER COMMA IDENTIFIER 
+                     | <variable_dictionary> COMMA IDENTIFIER
+                     | <variable_dictionary> COMMA <array>
+                     | <line> 
+
+<return>::= RETURN INTEGER QM NEWLINE
+        | RETURN IDENTIFIER QM NEWLINE
+        | RETURN <int_op> QM NEWLINE
+
+<if_stmt> ::= IF L_PAR <inspector> R_PAR THEN NEWLINE
+        | <if_stmt> <line>
+        | <if_stmt> <end_if_stmt> 
+        | <if_stmt> <elseif_stmt>
+        | <if_stmt> <elseif_stmt> <else_stmt> 
+        
+<elseif_stmt> ::= ELSEIF L_PAR <inspector> R_PAR  <line> 
+<else_stmt> ::= ELSE  <line>
+<end_if_stmt>: ENDIF NEWLINE
+
+
+<for_statement> ::= FOR IDENTIFIER COLON ASSIGN INTEGER TO INTEGER STEP INTEGER NEWLINE
+               |<for_statement> <line> 
+               |<for_statement> <end_for_statement>
+
+<end_for_statement>::= ENDFOR NEWLINE
+
+<switch> ::= SWITCH L_PAR LT IDENTIFIER GT R_PAR NEWLINE
+        |SWITCH L_PAR LT IDENTIFIER GT R_PAR COMMENT  
+        |<switch> <case> 
+        |<switch> <case> <end_switch>
+<case> ::= CASE L_PAR LT INTEGER GT R_PAR NEWLINE <line> <break>
+<end_switch> ::= ENDSWITCH NEWLINE
+
+<while> ::=  WHILE L_PAR <inspector_gen> R_PAR NEWLINE 
+        |<while> <line> 
+        |<while> <end_while>
+
+<end_while> ::=  ENDWHILE NEWLINE
+
+<array> ::= IDENTIFIER L_BRACK INTEGER R_BRACK
+        | IDENTIFIER L_BRACK IDENTIFIER R_BRACK
+        
+<array_value> ::= <array> ASSIGN INTEGER   
+
+<operators> ::= EQ_OP | GE_OP | LE_OP | NE_OP | DEC_OP | INC_OP | LT | GT | AND_OP | OR_OP 
+
+<optional_parameters> ::=  IDENTIFIER 
+                     | <data_type> IDENTIFIER COMMA <data_type> IDENTIFIER
+                     | IDENTIFIER IDENTIFIER COMMA <optional_parameters>
+                     | IDENTIFIER IDENTIFIER
+
+<function> ::= FUNCTION IDENTIFIER L_PAR <optional_parameters> R_PAR NEWLINE <line> | <function> <return> <end_function>
+<end_function> ::=  END_FUNCTION NEWLINE
+            
+
+<function_call> ::= IDENTIFIER L_PAR <optional_parameters> R_PAR 
+	                   | IDENTIFIER L_PAR <data_type> R_PAR
+                     | IDENTIFIER L_PAR <data_type> COMMA <data_type> R_PAR    
+                     | IDENTIFIER L_PAR <data_type> COMMA <data_type> COMMA <data_type> R_PAR   
+                     | <function_call> QM NEWLINE
+
+<inspector>::= IDENTIFIER <operators> <data_type>
+           |<data_type> <operators> IDENTIFIER
+        
+
+<inspector_gen> ::= <inspector> 
+               | <inspector> <operators> 
+               | <inspector> <operators> <inspector> 
+               | <inspector_gen> QM
+                
+<comments> ::= COMMENT
+
+<print> ::= PRINT L_PAR <data_type> R_PAR QM | PRINT L_PAR <data_type> <print_name_var> R_PAR QM | <print> NEWLINE
+<print_name_var> ::= L_BRACK COMMA IDENTIFIER R_BRACK 
+                | L_BRACK COMMA <array> R_BRACK 
+                
+
+<main_func> ::=  STARTMAIN  NEWLINE
+           | <main_func> <line> 
+           | <main_func> <end_main>
+
+<end_main> ::= ENDMAIN NEWLINE
+
+<import_statement> ::=FROM IDENTIFIER IMPORT IDENTIFIER AS IDENTIFIER 
+        			    | FROM IDENTIFIER IMPORT IDENTIFIER
+                  | FROM IDENTIFIER IMPORT MUL 
+                  | IMPORT IDENTIFIER AS IDENTIFIER
+  		          	| IMPORT IDENTIFIER
+                  | FROM IDENTIFIER IMPORT IDENTIFIER COMMA IDENTIFIER
+ 
+<dictionaries> ::= IDENTIFIER ASSIGN L_BRACE <dictionary_data> R_BRACE 
+                | IDENTIFIER ASSIGN IDENTIFIER L_PAR L_BRACK L_PAR <dictionary_data> R_PAR R_BRACK R_PAR
+	              | IDENTIFIER ASSIGN IDENTIFIER L_PAR <dictionary_data> <optional_parameters> <dictionary_data> R_PAR 
+                | IDENTIFIER ASSIGN <function_call>
+                | <array_value> QM
+        
+
+<dictionary_data> ::= <data_type> COMMA <data_type> <optional_parameters> 
+                 | IDENTIFIER ASSIGN <data_type> QM 
+                 |/* empty */ 
+                 
+ <term> ::= <data_type>
+
+ <calc_assigmnet> ::= IDENTIFIER ASSIGN <int_op>
+
+ <int_op> ::= <int_data> | <int_op> PLUS <int_data> | <int_op> MINUS <int_data> 
+	       | <int_op> MUL <int_data>  
+         | <int_op> DIV <int_data> 
+
+ <int_data> ::= INTEGER | IDENTIFIER
