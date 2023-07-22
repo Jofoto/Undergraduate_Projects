@@ -1,0 +1,96 @@
+<script type="text/javascript" src="/js/admin.js"></script>
+
+<header>
+    <section class="general-header">
+        <nav>
+            <a href="/"><img src="/images/mayday_logo.png" alt="#"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">LOGOUT</a></li>                    
+                </ul>
+            </div>
+        </nav>
+    </section>
+</header>
+
+<div class="container">
+<div class="form-uheader">
+    <h1>Welcome Dear Admin 
+        <% if (typeof user != 'undefined'){  %> 
+            <%= user.username %>
+        <% } %> 
+        !
+    </h1>
+        <h2>Let's evaluate your choices.</h2>
+</div>
+<% if (typeof alert != 'undefined'){ %>
+    <% alert.forEach(function(error, i) { %>
+        <div class="user-alert" role="alert" id ='num<%=i%>'>
+            <div class="alert-message"><%- error.msg %></div> 
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+    <% }); %>
+<% } %>
+</div>
+<div class="container">
+    <div class="dropdown">
+        <button onclick="myFunctionA('upload')" class="drop_btn_a"><img src="/images/upload.png" alt="#"><h1>Upload, Update, Delete Files</h1></button>
+        <button onclick="myFunctionA('piechart')" class="drop_btn_a"><img src="/images/piechart.png" alt="#"><h1>Statistics</h1></button>
+    </div>
+</div>   
+
+<div class="form-aheader">
+    <h1>You are an Admin, do whatever</h1>
+    <h2>Click on a box and look below.</h2>
+    <img src="/images/code-review.png" alt="eye">
+</div>
+
+<div class="container" >        
+    <div id="menu" class="dropdown-menu" style="overflow:auto"> 
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span><br>
+        <div class="dropdown-item" id="item-upload">
+            <div id = 'upload'>
+                <h2>You have the ability to load P.O.I data:</h2><br>
+                <form style="margin:auto; display:block;">
+                    <label for="upload_data" class="btn" style="background-color:rgb(54, 96, 173);">Choose file</label>
+                    <input type="file" id="upload_data" style="visibility:hidden;">
+                    <p><textarea rows="10" cols="150" id="previewUpload" name="previewUpload" readonly="true" style=display:none;></textarea></p>
+                    <p><button id="uploadBtn" disabled="true" class ="button-77" formmethod="post" formaction="/login/admin/<%=user._id %>/upload">Upload Places data in Database</button></p><br><br>
+                </form>
+
+                <form style="margin:auto; display:block;">
+                    <label for="update_data" class="btn" style="background-color:rgb(54, 96, 173);">Choose file</label>
+                    <input type="file" id="update_data" style="visibility:hidden;">
+                    <p><textarea rows="10" cols="150" id="previewUpdate" name="previewUpdate" readonly="true" style=display:none;></textarea></p>
+                    <p><button id="updateBtn" disabled="true" class ="button-77" formmethod="post" formaction="/login/admin/<%=user._id %>/update">Update Places data in Database</button></p><br><br><br>
+                </form>
+                <form style="margin:auto; display:block;">
+                    <p><button id = "deleteBtn"  class ="button-delete" formmethod="post" formaction="/login/admin/<%=user._id %>/delete" >Delete Every Place data from Database</button></p>
+                    <p><input type="checkbox" required="required">
+                    <label for="text" class="label-title" style="font-size:15px; color:rgb(165, 1, 1);">Forreal, this is dangerous. Are you sure you want to delete everything?</label></p>
+                    <%#Mporoume na kanoume to apo pano mnm na emfanizetai afou patithei mia fora to delete?:) kai na patas to tik kai na ginetai ektos an thes na to kaneis opos to xes stin arxi%>
+                </form>
+            </div>
+        </div>
+        
+        <div class="dropdown-item" id="item-piechart">
+            <div id = 'piechart'>    
+                <h2>You have the ability to see a lot of things.. a few examples:</h2><br>   
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="getVisits()">Total number of visits</button></p><br>
+                <h2 id="getVisits" style="display: none ;margin-bottom: 20px;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="getCases()">Total number of cases</button></p><br>
+                <h2 id="getCases" style="display: none ;margin-bottom: 20px;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="activeCases()">Total number of active case visits</button></p><br>
+                <h2 id="activeCases" style="display: none ;margin-bottom: 20px;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="getPlaces()">Total number of P.O.I.s</button></p><br>
+                <h2 id="getPlaces" style="display: none ;margin-bottom: 20px;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="placeCategory()">P.O.I. classification in Database (number of visits)</button></p><br>
+                <h2 id="placeCategory" style="display:none; margin-bottom: 20;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;" onclick="placeCategoryCase()">P.O.I. classification in Database (number of cases)</button></p><br>
+                <h2 id="placeCategoryCase" style="display:none; margin-bottom: 20;">undefined</h2>
+                <p><button class ="button-77" style="margin:auto; display:block;">Diagram per day</button></p><br>
+                <p><button class ="button-77" style="margin:auto; display:block;">Diagram per hour</button></p>
+            </div>
+        </div>
+    </div>
+</div>

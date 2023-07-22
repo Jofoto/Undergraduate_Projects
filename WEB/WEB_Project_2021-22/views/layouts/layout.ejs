@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <!-- site metas -->
+    <title>Mayday</title>
+    <!-- fevicon -->
+    <link rel="icon" href="/images/fevicon.png" />
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <!-- font links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <% if(page != 'user' && page != 'admin' && page != 'index') { %>
+        <%- include('../partials/header')%> 
+    <% } %> 
+    <%- body %>
+    <%- include('../partials/footer.ejs') %> 
+</body>
+</html>

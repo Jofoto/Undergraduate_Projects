@@ -1,0 +1,233 @@
+<script type="text/javascript" src="/js/user.js"></script>
+<header>
+    <section class="general-header">
+        <nav>
+            <a href="/"><img src="/images/mayday_logo.png" alt="#"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">LOGOUT</a></li>
+                   
+                </ul>
+            </div>
+        </nav>
+    </section>
+</header>
+<div class="container">
+<div class="form-uheader">
+    <h1>Welcome 
+        <%if (typeof user != 'undefined'){%> 
+            <%= user.username %> 
+        !
+        <% } %> 
+    </h1>
+        <h2>Let's evaluate your choices.</h2>
+</div>
+<% if (typeof alert != 'undefined'){ %>
+
+        <% alert.forEach(function(error, i) { %>
+
+            <div class="user-alert" role="alert" id ='num<%=i%>'>
+                <div class="alert-message"><%- error.msg %></div> 
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+
+        <% }); %>
+
+<% } %>
+</div>
+<div class="container">
+    <div class="dropdown">
+        <button onclick="openDropdown('map')" class="drop_btn" method = "post"><img src="/images/map.png" alt="#"><h1>Where would you like to visit today?</h1></button>
+        <button onclick="openDropdown('nervous')" class="drop_btn"><img src="/images/nervous.png" alt="#"><h1>Possible contact with a covid case</h1></button>
+        <button onclick="openDropdown('patient')" class="drop_btn"><img src="/images/patient.png" alt="#"><h1>Do you have Covid? Please let us know.</h1></button>
+        <button onclick="openDropdown('edit')" class="drop_btn"><img src="/images/edit.png" alt="#"><h1>Edit your profile</h1></button>
+    </div>
+</div>   
+
+<div class="container">        
+    <div id="menu" class="dropdown-menu">
+        <div class="dropdown-item" id = "item-map">
+            <span class="closebtn2" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <div class="horizontal-group_user_map">
+                <div class="left">
+                    <div class="map">
+                        <h3>Enter places tags, ceperated by space and press the "find" Button</h1>
+                        <input type= "text" id = "findPlaces" class = "user-input" name = "findPlaces">
+                        <button class="btn" id = "findButton" onclick="makeMarker()">Find</button>
+                        <button class="btn" id = "findButton" onclick="deleteMarkers()">Delete</button>
+                        <div id="map"></div>
+                        <%# script for maps API %> 
+                        <script
+                          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjsLfS56KzXWYNB1FanF_df132cQTI7RM&callback=initMap&v=weekly"
+                          async
+                        ></script>
+                        <script src="/js/map.js"></script>
+                        <%# END script for maps API %>
+                    </div>
+                </div>
+                <div class = "right">
+                    <div id = 'verify'>
+                        <div class="submit-form">
+                            <div class="form-sheader">
+                                <div class="form-sgroup">
+                                    <div class="form-sbody">
+                                        <form>
+                                            <h1>Here you can register a recent visit.</h1>
+                                            <label class="label-title">State the name of the P.O.I: *</label><br>
+                                            <input type="pname" id="poiname" name="poiname" class="form-input" placeholder="Copy and paste a name from the map!" required="required"><br>
+                                            <label class="label-title">Estimated Number of Persons in this place: (Not required)</label><br>
+                                            <input type="number" id="population" name="population" class="form-input" placeholder="Can you guess the amount of people who are there?" min="0" step="1"><br>
+                                            <input type="checkbox" required="required">
+                                            <label for="text" class="label-title" style="font-size:10px; color:rgb(165, 1, 1);">By agreeing to the terms of agreement, you aknowledge that your registered visitation will be saved in our database.</label><br>
+                                            <button type="submit" formmethod="post" formaction="/login/user/<%=user._id %>/registerVisit" class="sbutton">Submit</button>   
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-item" id = "item-nervous">
+            <span class="closebtn2" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <div id = 'nervous'>
+                <div class="submit-form">
+                    <div class="form-sheader">
+                        <div class="form-sgroup">
+                            <div class="form-sbody">
+                                <form>
+                                    <div class="form-group">
+                                        <button class="sbutton" formmethod="post" formaction="/login/user/<%=user._id %>/covidContact">Click Me!</button>
+                                    </div>
+                                    <h1 style="display: none;">In the list below you can check if you've been in contact with any active case(s).</h1>
+                                    <label for="text" class="label-title">In the last 7 days you have visited these places: </label><br>
+                                    <div class="row">
+                                        <div class ="column"><h2>Place</h2></div>
+                                        <div class ="column"><h2>Time</h2></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <%# Covid cace form  %> 
+        <div class="dropdown-item" id = "item-patient">
+            <span class="closebtn2" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <div id = 'patient'>
+                <div class="submit-form">
+                    <div class="form-sheader">
+                        <div class="form-sgroup">
+                            <div class="form-sbody">
+                                <form action="covidCase" <%#onsubmit="return ajaxpost ()"%>>
+                                    <h1>By commiting the date of your diagnosis you confirm that you are an active case of Covid-19. All your data will be registered in our database.</h1>
+                                    <label for="date" class="label-title">State the date you were diagnosed: *</label><br>
+                                    <input type="date" id="date" name="date" class="form-input" required="required"><br><br>
+                                    <button type="submit" formmethod="post" formaction="/login/user/<%=user._id %>/covid" class="sbutton">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <%# End covid cace form  %>
+        <%# Edit profile form  %>
+        <div class="dropdown-item" id = "item-edit">
+            <span class="closebtn2" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <div id = 'edit'>
+                <div class="submit-form">
+                    <div class="form-sheader">
+                        <div class="form-sgroup">
+                            <div class="form-sbody">
+                                <form>
+                                    <h1>Change your Username, Password and/or View your own History.</h1>
+                                    <label for="name" class="label-title">Change Username: *</label><br>
+                                    <input type="text" id="username" name="username" class="form-input" placeholder="Change your username. If you don't want, leave it empty"><br>
+                                    <label for="name" class="label-title">Confirm new Username: *</label><br>
+                                    <input type="text" id="confirm_username" name="confirm_username" class="form-input" placeholder="Confirm new username"><br>
+                                    <label for="name" class="label-title">Change Password: *</label><br>
+                                    <input type="text" id="password" name="password" class="form-input" placeholder="Change your password. If you don't want, leave it empty"><br>
+                                    <label for="name" class="label-title">Confirm new Password: *</label><br>
+                                    <input type="text" id="password" name="confirm_password" class="form-input" placeholder="Confirm new password"><br><br>
+                                    <button type="submit" formmethod="POST" formaction="/login/user/<%= user._id%>/editProfile" class="sbutton">Submit</button><br><br>
+                              </form>
+                              <div class="horizontal-group_user_edit">
+                                <div class="left">
+                                    <button class = "sbutton" onclick="openHistoryLogin()">View Your Login History</button>
+                                </div>
+                                <div class="right">
+                                    <button class = "sbutton" onclick="openHistoryCovid()">View Your Covid History</button>
+                                </div>
+                              </div>
+                              <div id = "history-links-login" class="history-links" style="display: none;">
+                                <% if (typeof loginHistory != 'undefined'){ %>
+                                    <div class="horizontal-group-profile">
+                                        <ul>
+                                            <li>
+                                                You have logged in a total of <%= loginHistory.length %> times 
+                                            </li>
+                                        </ul>
+                                        <% loginHistory.forEach(function(error, i) { %>
+                                            <ul>
+                                                <li>
+                                                <div class="left">
+                                                    &diams;
+                                                    <%= loginHistory[i].day + '/'%>
+                                                    <%= loginHistory[i].month + '/'%>
+                                                    <%= loginHistory[i].year%>
+                                                </div>
+                                                <div class="right">
+                                                    <%= loginHistory[i].hours%>
+                                                    <%= ' : ' + loginHistory[i].minutes%>
+                                                </div>
+                                                </li>
+                                            </ul>
+                                        <% }); %>
+                                    </div>
+                                <% }else{ %>
+                                    You don't have a login history Yet
+                                <% } %>
+                             </div>
+                             <div id = "history-links-covid" class="history-links" style="display: none;">
+                                <% if (typeof covidHistory != 'undefined'){ %>
+                                    <div class="horizontal-group-profile">
+                                        <ul>
+                                            <li>
+                                                You have had the covid virus a total of <%= covidHistory.length %> times 
+                                            </li>
+                                        </ul>
+                                        <% covidHistory.forEach(function(error, i) { %>
+                                            <ul>
+                                                <li>
+                                                <div class="left">
+                                                    &diams;
+                                                    <%= covidHistory[i].day + '/'%>
+                                                    <%= covidHistory[i].month + '/'%>
+                                                    <%= covidHistory[i].year%>
+                                                </div>
+                                                
+                                                </li>
+                                            </ul>
+                                        <% }); %>
+                                    </div>
+                                <% }else{ %>
+                                    You don't have a covid history Yet
+                                <% } %>
+                             </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%# End Edit profile form  %>
+    </div>
+</div>
+
+
+
